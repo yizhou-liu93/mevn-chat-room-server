@@ -19,6 +19,9 @@ function getAll() {
 }
 
 function insert(msg) {
+  if (!msg.username) {
+    msg.username = 'Anonymous';
+  }
   const result = Joi.validate(msg, schema);
   if (result.error === null) {
     msg.created = new Date();
