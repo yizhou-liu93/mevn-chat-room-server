@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-const message = require('./db/Messages');
+const messages = require('./db/Messages');
 
 
 const app = express();
@@ -22,7 +22,7 @@ app.get('/', (req,res)=>{
 });
 
 app.get('/messages', (req, res)=>{
-  message.getAll()
+  messages.getAll()
   .then((messages)=>{
     res.json(messages);
   })
@@ -30,6 +30,13 @@ app.get('/messages', (req, res)=>{
 
 app.post('/messages', (req,res)=>{
   console.log(req.body);
+  messages.insert(req.body)
+  .then((message)=>{
+    res.json(message);
+  })
+  .catch((error)=>{
+    res.status(500).json(error);
+  })
 });
 
 const port = process.env.PORT || 1234;
