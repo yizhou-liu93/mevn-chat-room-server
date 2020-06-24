@@ -29,7 +29,6 @@ app.get('/messages', (req, res)=>{
 });
 
 app.post('/messages', (req,res)=>{
-  console.log(req.body);
   messages.insert(req.body)
   .then((message)=>{
     res.json(message);
