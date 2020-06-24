@@ -4,6 +4,9 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
+const message = require('./db/Messages');
+
+
 const app = express();
 //log out message when receive request
 app.use(morgan('tiny'));
@@ -16,6 +19,17 @@ app.get('/', (req,res)=>{
   res.json({
     message: `Chat Room Server`
 });
+});
+
+app.get('/messages', (req, res)=>{
+  message.getAll()
+  .then((messages)=>{
+    res.json(messages);
+  })
+});
+
+app.post('/messages', (req,res)=>{
+  console.log(req.body);
 });
 
 const port = process.env.PORT || 1234;
